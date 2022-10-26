@@ -27,6 +27,26 @@
                     map.setFog({}); // Set the default atmosphere style
                 });
             });
+
+            onToggle = () => {
+                const panel = document.getElementById("panel");
+
+                if (panel.scrollTop > 0) {
+                    panel.scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: "smooth",
+                    });
+
+                    return;
+                }
+
+                panel.scrollTo({
+                    top: panel.querySelector(".Swypable-Indent2").clientHeight,
+                    left: 0,
+                    behavior: "smooth",
+                });
+            };
         </script>
         <style>
             .Map {
@@ -53,11 +73,11 @@
                 pointer-events: none;
                 z-index: 1;
             }
-            .Swypable-Position1 {
+            .Swypable-Indent1 {
                 height: var(--position-1);
                 scroll-snap-align: start;
             }
-            .Swypable-Position2 {
+            .Swypable-Indent2 {
                 height: calc(100vh - var(--position-1) - var(--top-padding) - var(--body-min-height));
                 scroll-snap-align: start;
             }
@@ -71,9 +91,11 @@
             }
             .Swypable-Header {
                 background-color: white;
-                min-height: 2rem;
                 border-top-left-radius: inherit;
                 border-top-right-radius: inherit;
+                display: flex;
+                justify-content: space-between;
+                padding: 0.5rem;
                 position: sticky;
                 top: 0;
             }
@@ -81,11 +103,13 @@
     </head>
     <body>
         <div id="map" class="Map"></div>
-        <div class="Swypable">
-            <div class="Swypable-Position2"></div>
-            <div class="Swypable-Position1"></div>
+        <div id="panel" class="Swypable">
+            <div class="Swypable-Indent2"></div>
+            <div class="Swypable-Indent1"></div>
             <div class="Swypable-Body">
-                <div class="Swypable-Header">Header</div>
+                <div class="Swypable-Header">
+                    <span>Header</span><button class="Swypable-Toggle" onClick="onToggle()">Toggle</button>
+                </div>
                 <div class="Preview">Hello</div>
                 <div class="Swypable-Content">
                     <p>
