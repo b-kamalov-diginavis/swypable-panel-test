@@ -77,17 +77,24 @@
                 scroll-snap-type: y mandatory;
                 border-top-left-radius: 1rem;
                 border-top-right-radius: 1rem;
-                /* pointer-events: none; Не работает в Хроме :( Для него хак с clip-path */
                 z-index: 2;
-                clip-path: polygon(
-                    0% calc(100% - var(--body-min-height)),
-                    100% calc(100% - var(--body-min-height)),
-                    100% 100%,
-                    0% 100%
-                );
+                pointer-events: none;
+            }
+            /* Хак для Хрома и Safari */
+            @supports(-webkit-clip-path: polygon(0 0, 0 0)) {
+                .Swypable {
+                    pointer-events: all;
+                    -webkit-clip-path: polygon(
+                        0% calc(100% - var(--body-min-height)),
+                        100% calc(100% - var(--body-min-height)),
+                        100% 100%,
+                        0% 100%
+                    );
+                }
             }
             .Swypable[data-open="true"] {
-                clip-path: none;
+                pointer-events: all;
+                -webkit-clip-path: none;
             }
             .Swypable-Indent1 {
                 height: var(--position-1);
@@ -106,6 +113,7 @@
                 position: relative;
                 transition: opacity 0.3s;
                 opacity: 0;
+                pointer-events: none;
             }
             .Swypable[data-open="true"] .Swypable-Body {
                 opacity: 1;
